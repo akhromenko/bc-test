@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fac46d6-5d6b-42a8-a0e5-dfed01914ebd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/endpoints/EndpointsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/endpoints/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/tests/FundingSmokeTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+    <list default="true" id="2fac46d6-5d6b-42a8-a0e5-dfed01914ebd" name="Default Changelist" comment="FundingSmokeTest added">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/endpoints/EndpointsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/endpoints/EndpointsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/tests/FundingSmokeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/tests/FundingSmokeTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +81,7 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="2gJvxrduGxBfnIlg85TgYyzQpY4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -92,6 +93,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="external.system.task.project.file.to.start" value="$PROJECT_DIR$/src/test" />
@@ -107,17 +109,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.FundingSmokeTest">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="FundingSmokeTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -197,8 +188,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1715428747459</updated>
-      <workItem from="1715428752060" duration="16032000" />
+      <workItem from="1715428752060" duration="16558000" />
+      <workItem from="1715524545034" duration="3287000" />
     </task>
+    <task id="LOCAL-00001" summary="FundingSmokeTest added">
+      <created>1715451736362</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1715451736362</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,13 +214,18 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="FundingSmokeTest added" />
+    <option name="LAST_COMMIT_MESSAGE" value="FundingSmokeTest added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/tests/FundingSmokeTest.java</url>
-          <line>23</line>
+          <line>18</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

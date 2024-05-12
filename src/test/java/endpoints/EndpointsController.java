@@ -78,6 +78,6 @@ public class EndpointsController {
                 .contentType("application/json")
                 .queryParam("token", token)
                 .when().get(API_URL + "/{path}", path)
-                .then().extract().response();
+                .then().log().all().extract().response();
     }
 }

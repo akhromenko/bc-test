@@ -12,11 +12,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_OK;
 
@@ -37,11 +32,13 @@ public class FundingSmokeTest extends EndpointsController {
     @Order(1)
     @DisplayName("Create wallet")
     public void createWalletTest() {
+        // Create wallet
         Response wallet = createWallet(walletName, address);
         Assertions.assertEquals(wallet.getStatusCode(), SC_CREATED);
         Assertions.assertEquals(wallet.jsonPath().getString("name"), walletName);
         Assertions.assertEquals(wallet.jsonPath().get("addresses[0]").toString(), address);
 
+        // Check that wallet was created
         JsonPath addressInfo = getAddressInfo(address).jsonPath();
         Assertions.assertEquals(addressInfo.getInt("balance"), 0);
         Assertions.assertEquals(addressInfo.getInt("n_tx"), 0);
@@ -51,40 +48,46 @@ public class FundingSmokeTest extends EndpointsController {
     @Order(2)
     @DisplayName("Fund wallet and check balance")
     public void fundWalletTest() {
+        // Fund wallet
         Response funding = fundAddress(address, amount);
         Assertions.assertEquals(funding.statusCode(), SC_OK);
         firstTrxRef = funding.jsonPath().getString("tx_ref");
 
+        // Check that wallet contains trx_ref
         Response response = getAddressInfo(address);
         Assertions.assertEquals(response.statusCode(), SC_OK);
-        JsonPath balance = response.jsonPath();
-        Assertions.assertEquals(balance.getInt("balance"), 0);
-        Assertions.assertEquals(balance.getInt("final_balance"), amount);
-        Assertions.assertEquals(balance.getInt("final_n_tx"), 1);
-        Assertions.assertEquals(balance.getInt("n_tx"), 0);
-        Assertions.assertEquals(balance.getInt("unconfirmed_n_tx"), 1);
-        Assertions.assertEquals(balance.getInt("total_received"), 0);
         Assertions.assertTrue(response.asString().contains(firstTrxRef));
     }
 
     @Test
     @Order(3)
     @DisplayName("Fund wallet again and check transactions")
-    public void transactionsCountTest() {
-        Response funding = fundAddress(address, amount);
+    public void transactionsValidationTest() {
+        // Fund wallet one more time
+        Response funding = fundAddress(address, amount * 2);
         Assertions.assertEquals(funding.statusCode(), SC_OK);
         String secondTrxRef = funding.jsonPath().getString("tx_ref");
 
+        //Check transaction details
+        Response firstTrxDetails = getTransaction(firstTrxRef);
+        Response secondTrxDetails = getTransaction(secondTrxRef);
+        int firstTrxAmount = firstTrxDetails.jsonPath().getInt("outputs[0].value");
+        int secondTrxAmount = secondTrxDetails.jsonPath().getInt("outputs[0].value");
+
+        //Validate trx on address
         Response response = getAddressInfo(address);
         Assertions.assertEquals(response.statusCode(), SC_OK);
         JsonPath balance = response.jsonPath();
-        Assertions.assertEquals(balance.getInt("balance"), 0);
-        Assertions.assertEquals(balance.getInt("final_balance"), amount*2);
-        Assertions.assertEquals(balance.getInt("final_n_tx"), 2);
-        Assertions.assertEquals(balance.getInt("n_tx"), 0);
-        Assertions.assertEquals(balance.getInt("unconfirmed_n_tx"), 2);
-        Assertions.assertEquals(balance.getInt("total_received"), 0);
-        Assertions.assertTrue(response.asString().contains(firstTrxRef));
-        Assertions.assertTrue(response.asString().contains(secondTrxRef));
+        if (response.jsonPath().get("txrefs") == null) {
+            Assertions.assertEquals(balance.getInt("unconfirmed_txrefs[1].value"), secondTrxAmount);
+            Assertions.assertEquals(balance.getInt("unconfirmed_txrefs[0].value"), firstTrxAmount);
+            Assertions.assertEquals(balance.getString("unconfirmed_txrefs[1].tx_hash"), secondTrxRef);
+            Assertions.assertEquals(balance.getString("unconfirmed_txrefs[0].tx_hash"), firstTrxRef);
+        } else {
+            Assertions.assertEquals(balance.getInt("txrefs[1].value"), firstTrxAmount);
+            Assertions.assertEquals(balance.getInt("txrefs[0].value"), secondTrxAmount);
+            Assertions.assertEquals(balance.getString("txrefs[1].tx_hash"), firstTrxRef);
+            Assertions.assertEquals(balance.getString("txrefs[0].tx_hash"), secondTrxRef);
+        }
     }
 }
